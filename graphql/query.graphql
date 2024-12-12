@@ -1,0 +1,25 @@
+query GetAllPosts {
+	folderFromPath(path: "https://tuatmcc.kibe.la/folders/3754") {
+		id
+		name
+		notes(first: 1000) {
+			totalCount
+			edges {
+				node {
+					id
+					title
+					createdAt
+				}
+			}
+		}
+	}
+}
+
+query GetPost($id: ID!) {
+	note(id: $id) {
+		id
+		title
+		createdAt
+		content
+	}
+}
