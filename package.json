@@ -11,7 +11,10 @@
 		"fmt": "biome check . --write",
 		"typecheck": "tsc --noEmit",
 		"codegen": "graphql-codegen --config codegen.ts",
-		"get-graphql-schema": "get-graphql-schema"
+		"get-graphql-schema": "get-graphql-schema",
+		"wrangler": "wrangler",
+		"dev:wrangler": "wrangler dev",
+		"deploy:wrangler": "wrangler deploy --minify"
 	},
 	"workspaces": ["packages/*"],
 	"dependencies": {
@@ -41,6 +44,7 @@
 	},
 	"devDependencies": {
 		"hono": "workspace:hono",
+		"wrangler": "^3.88.0",
 		"@biomejs/biome": "1.9.4",
 		"@graphql-codegen/cli": "5.0.3",
 		"@graphql-codegen/client-preset": "4.5.1",
