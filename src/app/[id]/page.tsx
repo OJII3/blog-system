@@ -1,6 +1,7 @@
 import { GetAllPostsDocument, GetPostDocument } from "@/graphql/request";
 import type { GetAllPostsQuery, GetPostQuery } from "@/graphql/types";
 import { query } from "@/lib/client";
+import { Compile } from "@/lib/unified";
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
 	const {
@@ -43,10 +44,13 @@ export default async function Blog({
 		throw error;
 	}
 
+	console.log(data.note.content);
+	const Result = await Compile(data.note.content);
+
 	return (
 		<div>
 			<h1>{data.note.title}</h1>
-			{data.note.content}
+			{Result}
 		</div>
 	);
 }

@@ -1,7 +1,9 @@
 import { GetAllPostsDocument } from "@/graphql/request";
 import type { GetAllPostsQuery } from "@/graphql/types";
 import { query } from "@/lib/client";
+import { Compile } from "@/lib/unified";
 import Link from "next/link";
+import { use } from "react";
 
 export const HomeContainer = async () => {
 	const {
