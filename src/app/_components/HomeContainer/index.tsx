@@ -11,10 +11,14 @@ export const HomeContainer = async () => {
 		},
 	} = await query<GetAllPostsQuery>({
 		query: GetAllPostsDocument,
+		variables: {
+			folderPath: "https://tuatmcc.kibe.la/folders/3754",
+		},
 	});
 	if (error) {
 		throw error;
 	}
+	await new Promise((resolve) => setTimeout(resolve, 100));
 
 	return (
 		<main className="container mx-auto px-4 py-8">

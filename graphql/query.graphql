@@ -1,5 +1,5 @@
-query GetAllPosts {
-	folderFromPath(path: "https://tuatmcc.kibe.la/folders/3754") {
+query GetAllPosts($folderPath: String!) {
+	folderFromPath(path: $folderPath) {
 		id
 		name
 		notes(first: 1000) {
