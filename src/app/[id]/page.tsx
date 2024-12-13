@@ -10,7 +10,11 @@ export async function generateStaticParams() {
 		error,
 	} = await query<GetAllPostsQuery>({
 		query: GetAllPostsDocument,
+		variables: {
+			folderPath: "https://tuatmcc.kibe.la/folders/3754",
+		},
 	});
+	await new Promise((resolve) => setTimeout(resolve, 100));
 
 	if (error) {
 		throw error;
