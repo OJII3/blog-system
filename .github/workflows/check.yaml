@@ -1,0 +1,102 @@
+name: Check
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup | Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup | Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Setup | Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run | Lint
+        run: pnpm run lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup | Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup | Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Setup | Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run | Type Check
+        run: pnpm run typecheck
+
+  check-schema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup | Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup | Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Setup | Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup | Generate Type for GraphQL
+        run: pnpm codegen
+
+      - name: Run | Check Diff
+        run: |
+          fail=0
+
+          # Check Type
+          if [ "$(git diff --ignore-space-at-eol --text src/graphql | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes in type definitions. See status below:"
+            git diff --ignore-space-at-eol --text app/libs/database.ts
+            fail=1
+          fi
+
+          if [ "$fail" -gt "0" ]; then
+            echo "Detected uncommitted changes in schema definitions. Please commit the changes before pushing."
+            exit 1
+          fi
