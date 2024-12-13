@@ -9,7 +9,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
 	return new ApolloClient({
 		cache: new InMemoryCache(),
 		link: new HttpLink({
-			uri: "https://tuatmcc.kibe.la/api/v1",
+			uri: process.env.KIBELA_API_URL,
 			headers: {
 				Authorization: `Bearer ${process.env.KIBELA_ACCESS_TOKEN}`,
 			},
