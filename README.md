@@ -1,34 +1,54 @@
 # Blog
 
-## 環境構築
+## 必要なもの
 
-### nix を使う場合(推奨)
+### 1. nix を使う場合(推奨)
 
-```sh
-nix develop
-```
-
-`direnv` を使用している場合`.envrc` に `use flake` を追加すると、自動で `nix develop` が実行される。
-
-### nix を使わない場合
-
-Node.js 22 LTS と、pnpm をインストールする.
-
-- Node.js は `apt` ではなく [mise](https://mise.jdx.dev/getting-started.html) や [nvm](https://github.com/nvm-sh/nvm) でインストールすると良い.
-
-## GraphQLのクエリの作り方
-
-<https://tuatmcc.kibe.la/api/console> にアクセスして、GraphQLのクエリを作成して動作を確認する。
-
-使いたいクエリをコピーして、`graphql/query.graphql` に追加する。(ファイルを分割する場合は`codegen.ts`も修正する)
-
-`*.graphql` ファイルに変更を加えた場合、以下のコマンドで型定義を生成する。
+`nix develop` コマンドを実行して開発環境に入る. `direnv` を併用している場合初回のみ以下のコマンドを実行.
 
 ```sh
-pnpm codegen
+direnv allow
 ```
 
-## Kibela の GraphQL スキーマの取得
+
+### 2. nix を使わない場合
+
+- Node.js 22: [mise](https://mise.jdx.dev/getting-started.html) や [nvm](https://github.com/nvm-sh/nvm) 等のランタイム管理ツールでインストールすることをオススメ.
+- [pnpm](https://pnpm.io/installation)
+
+## 開発
+
+### 依存関係のインストール
+
+```sh
+pnpm install
+```
+
+### 開発サーバーの起動
+
+```sh
+pnpm dev
+```
+
+### フォーマット
+
+```sh
+pnpm format
+```
+
+### リント
+
+```sh
+pnpm lint
+```
+
+### GraphQL クエリの作成 ・ コード生成
+
+1. <https://tuatmcc.kibe.la/api/console> にアクセスして、動作を確認しながらクエリを作成する.
+
+2. クエリをコピーして、`graphql/query.graphql` に追加し、 `pnpm codegen` を実行する.
+
+### Kibela の GraphQL スキーマ取得
 
 基本的にこの手順は不要.
 
