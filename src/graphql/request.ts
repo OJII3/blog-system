@@ -6,8 +6,8 @@ import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 
 export const GetAllPostsDocument = gql`
-    query GetAllPosts {
-  folderFromPath(path: "https://tuatmcc.kibe.la/folders/3754") {
+    query GetAllPosts($folderPath: String!) {
+  folderFromPath(path: $folderPath) {
     id
     name
     notes(first: 1000) {
@@ -41,7 +41,7 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    GetAllPosts(variables?: Types.GetAllPostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<Types.GetAllPostsQuery> {
+    GetAllPosts(variables: Types.GetAllPostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<Types.GetAllPostsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<Types.GetAllPostsQuery>(GetAllPostsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllPosts', 'query', variables);
     },
     GetPost(variables: Types.GetPostQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<Types.GetPostQuery> {

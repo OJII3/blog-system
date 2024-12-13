@@ -3617,7 +3617,9 @@ export enum WatchState {
   WatchNoteUpdate = 'WATCH_NOTE_UPDATE'
 }
 
-export type GetAllPostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllPostsQueryVariables = Exact<{
+  folderPath: Scalars['String']['input'];
+}>;
 
 
 export type GetAllPostsQuery = { readonly __typename?: 'Query', readonly folderFromPath: { readonly __typename?: 'Folder', readonly id: string, readonly name: string, readonly notes: { readonly __typename?: 'NoteConnection', readonly totalCount: number, readonly edges?: ReadonlyArray<{ readonly __typename?: 'NoteEdge', readonly node?: { readonly __typename?: 'Note', readonly id: string, readonly title: string, readonly createdAt: any } | null } | null> | null } } };
